@@ -1,33 +1,33 @@
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-add_library(beman.exemplar)
-add_library(beman::exemplar ALIAS beman.exemplar)
+add_library(beman.cache_latest)
+add_library(beman::cache_latest ALIAS beman.cache_latest)
 
-target_sources(beman.exemplar PRIVATE identity.cpp)
+target_sources(beman.cache_latest PRIVATE cache_latest.cpp)
 
 target_sources(
-    beman.exemplar
+    beman.cache_latest
     PUBLIC
         FILE_SET HEADERS
         BASE_DIRS ${PROJECT_SOURCE_DIR}/include
-        FILES ${PROJECT_SOURCE_DIR}/include/beman/exemplar/identity.hpp
+        FILES ${PROJECT_SOURCE_DIR}/include/beman/cache_latest/cache_latest.hpp
 )
 
 set_target_properties(
-    beman.exemplar
-    PROPERTIES VERIFY_INTERFACE_HEADER_SETS ON EXPORT_NAME exemplar
+    beman.cache_latest
+    PROPERTIES VERIFY_INTERFACE_HEADER_SETS ON EXPORT_NAME cache_latest
 )
 
 install(
-    TARGETS beman.exemplar
-    EXPORT beman.exemplar
+    TARGETS beman.cache_latest
+    EXPORT beman.cache_latest
     DESTINATION
     ${CMAKE_INSTALL_LIBDIR}$<$<CONFIG:Debug>:/debug>
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}$<$<CONFIG:Debug>:/debug>
     FILE_SET HEADERS DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
-if(BEMAN_EXEMPLAR_INSTALL_CONFIG_FILE_PACKAGE)
+if(BEMAN_cache_latest_INSTALL_CONFIG_FILE_PACKAGE)
     include(CMakePackageConfigHelpers)
 
     configure_package_config_file(
@@ -52,7 +52,7 @@ if(BEMAN_EXEMPLAR_INSTALL_CONFIG_FILE_PACKAGE)
     )
 
     install(
-        EXPORT beman.exemplar
+        EXPORT beman.cache_latest
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
         NAMESPACE beman::
         FILE ${PROJECT_NAME}-targets.cmake

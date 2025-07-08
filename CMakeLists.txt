@@ -3,31 +3,34 @@
 cmake_minimum_required(VERSION 3.25)
 
 project(
-    beman.exemplar # CMake Project Name, which is also the name of the top-level
+    beman.cache_latest # CMake Project Name, which is also the name of the top-level
     # targets (e.g., library, executable, etc.).
-    DESCRIPTION "A Beman library exemplar"
+    DESCRIPTION "A Beman library cache_latest"
     LANGUAGES CXX
-    VERSION 0.1.0
+    VERSION 1.0.0
 )
+
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_XX_COMPILER g++)
 
 enable_testing()
 
 # [CMAKE.SKIP_TESTS]
 option(
-    BEMAN_EXEMPLAR_BUILD_TESTS
+    BEMAN_CACHE_LATEST_BUILD_TESTS
     "Enable building tests and test infrastructure. Default: ON. Values: { ON, OFF }."
     ${PROJECT_IS_TOP_LEVEL}
 )
 
 # [CMAKE.SKIP_EXAMPLES]
 option(
-    BEMAN_EXEMPLAR_BUILD_EXAMPLES
+    BEMAN_cache_latest_BUILD_EXAMPLES
     "Enable building examples. Default: ON. Values: { ON, OFF }."
     ${PROJECT_IS_TOP_LEVEL}
 )
 
 option(
-    BEMAN_EXEMPLAR_INSTALL_CONFIG_FILE_PACKAGE
+    BEMAN_CACHE_LATEST_INSTALL_CONFIG_FILE_PACKAGE
     "Enable creating and installing a CMake config-file package. Default: ${PROJECT_IS_TOP_LEVEL}. Values: { ON, OFF }."
     ${PROJECT_IS_TOP_LEVEL}
 )
@@ -35,7 +38,7 @@ option(
 include(FetchContent)
 include(GNUInstallDirs)
 
-if(BEMAN_EXEMPLAR_BUILD_TESTS)
+if(BEMAN_CACHE_LATEST_BUILD_TESTS)
     # Fetch GoogleTest
     FetchContent_Declare(
         GTest
@@ -48,12 +51,12 @@ if(BEMAN_EXEMPLAR_BUILD_TESTS)
     FetchContent_MakeAvailable(GTest)
 endif()
 
-add_subdirectory(src/beman/exemplar)
+add_subdirectory(src/beman/cache_latest)
 
-if(BEMAN_EXEMPLAR_BUILD_TESTS)
-    add_subdirectory(tests/beman/exemplar)
+if(BEMAN_CACHE_LATEST_BUILD_TESTS)
+    add_subdirectory(tests/beman/cache_latest)
 endif()
 
-if(BEMAN_EXEMPLAR_BUILD_EXAMPLES)
+if(BEMAN_CACHE_LATEST_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
