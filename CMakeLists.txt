@@ -10,8 +10,6 @@ project(
     VERSION 1.0.0
 )
 
-set(CMAKE_CXX_STANDARD 26)
-
 enable_testing()
 
 # [CMAKE.SKIP_TESTS]
