@@ -1,84 +1,50 @@
-# beman.exemplar: A Beman Library Exemplar
+# beman.cache_latest: A Beman Library
 
 <!--
 SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 -->
 
 <!-- markdownlint-disable-next-line line-length -->
-![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg) ![Continuous Integration Tests](https://github.com/bemanproject/exemplar/actions/workflows/ci_tests.yml/badge.svg) ![Lint Check (pre-commit)](https://github.com/bemanproject/exemplar/actions/workflows/pre-commit.yml/badge.svg)
+![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg) ![Continuous Integration Tests](https://github.com/bemanproject/cache_latest/actions/workflows/ci_tests.yml/badge.svg) ![Lint Check (pre-commit)](https://github.com/bemanproject/cache_latest/actions/workflows/pre-commit.yml/badge.svg)
 
-`beman.exemplar` is a minimal C++ library conforming to [The Beman Standard](https://github.com/bemanproject/beman/blob/main/docs/BEMAN_STANDARD.md).
+`beman.cache_latest` is a minimal C++ library conforming to [The Beman Standard](https://github.com/bemanproject/beman/blob/main/docs/BEMAN_STANDARD.md).
 This can be used as a template for those intending to write Beman libraries.
 It may also find use as a minimal and modern  C++ project structure.
 
-**Implements**: `std::identity` proposed in [Standard Library Concepts (P0898R3)](https://wg21.link/P0898R3).
+**Implements**: `std::cache_latest` proposed in [Standard Library Concepts (P3138R3)](https://wg21.link/P3138R3).
 
 **Status**: [Under development and not yet ready for production use.](https://github.com/bemanproject/beman/blob/main/docs/BEMAN_LIBRARY_MATURITY_MODEL.md#under-development-and-not-yet-ready-for-production-use)
 
 ## Usage
 
-`std::identity` is a function object type whose `operator()` returns its argument unchanged.
-`std::identity` serves as the default projection in constrained algorithms.
-Its direct usage is usually not needed.
+`std::cache_latest` is a range adaptor type that caches the result of the last dereference of the underlying iterator
 
-### Usage: default projection in constrained algorithms
-
-The following code snippet illustrates how we can achieve a default projection using `beman::exemplar::identity`:
+The following code snippet illustrates how we can achieve a default projection using `beman::cache_latest`:
 
 ```cpp
-#include <beman/exemplar/identity.hpp>
-
-namespace exe = beman::exemplar;
-
-// Class with a pair of values.
-struct Pair
-{
-    int n;
-    std::string s;
-
-    // Output the pair in the form {n, s}.
-    // Used by the range-printer if no custom projection is provided (default: identity projection).
-    friend std::ostream &operator<<(std::ostream &os, const Pair &p)
-    {
-        return os << "Pair" << '{' << p.n << ", " << p.s << '}';
-    }
-};
-
-// A range-printer that can print projected (modified) elements of a range.
-// All the elements of the range are printed in the form {element1, element2, ...}.
-// e.g., pairs with identity: Pair{1, one}, Pair{2, two}, Pair{3, three}
-// e.g., pairs with custom projection: {1:one, 2:two, 3:three}
-template <std::ranges::input_range R,
-          typename Projection>
-void print(const std::string_view rem, R &&range, Projection projection = exe::identity>)
-{
-    std::cout << rem << '{';
-    std::ranges::for_each(
-        range,
-        [O = 0](const auto &o) mutable
-        { std::cout << (O++ ? ", " : "") << o; },
-        projection);
-    std::cout << "}\n";
-};
+#include <include/beman/cache_latest.hpp>
 
 int main()
 {
-    // A vector of pairs to print.
-    const std::vector<Pair> pairs = {
-        {1, "one"},
-        {2, "two"},
-        {3, "three"},
-    };
+    std::vector<int> v = {1, 2, 3, 4, 5};
 
-    // Print the pairs using the default projection.
-    print("\tpairs with beman: ", pairs);
+    auto even_squares = v
+        | std::views::transform([](int i){
+                std::print("transform: {}\n", i);
+                return i * i;
+            })
+        | beman::cache_latest
+        | std::views::filter([](int i){
+                std::print("filter: {}\n", i);
+                return i % 2 == 0;
+            });
 
-    return 0;
+    for (int i : even_squares) {
+        std::print("Got: {}\n", i);
+    }
 }
 
 ```
-
-Full runnable examples can be found in [`examples/`](examples/).
 
 ## Dependencies
 
@@ -93,7 +59,7 @@ This project pulls [Google Test](https://github.com/google/googletest)
 from GitHub as a development dependency for its testing framework,
 thus requiring an active internet connection to configure.
 You can disable this behavior by setting cmake option
-[`BEMAN_EXEMPLAR_BUILD_TESTS`](#beman_exemplar_build_tests) to `OFF`
+[`BEMAN_CACHE_LATEST_BUILD_TESTS`](#beman_cache_latest_build_tests) to `OFF`
 when configuring the project.
 
 However,
@@ -145,7 +111,7 @@ requires minimal setup.
 
 You can create a codespace for this project by clicking this badge:
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/bemanproject/exemplar)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/bemanproject/cache_latest)
 
 For more detailed documentation regarding creating and developing inside of
 GitHub codespaces, please reference [this doc](https://docs.github.com/en/codespaces/).
@@ -263,7 +229,7 @@ cmake -LH | grep "BEMAN_EXEMPLAR" -C 2
 
 <summary> Details of CMake arguments. </summary>
 
-#### `BEMAN_EXEMPLAR_BUILD_TESTS`
+#### `BEMAN_CACHE_LATEST_BUILD_TESTS`
 
 Enable building tests and test infrastructure. Default: ON.
 Values: { ON, OFF }.
@@ -280,67 +246,67 @@ cmake -B build -S . -DCMAKE_CXX_STANDARD=20 -DBEMAN_EXEMPLAR_BUILD_TESTS=OFF
 > disable building tests avoids the project from pulling Google Tests from
 > GitHub.
 
-#### `BEMAN_EXEMPLAR_BUILD_EXAMPLES`
+#### `BEMAN_CACHE_LATEST_BUILD_EXAMPLES`
 
 Enable building examples. Default: ON. Values: { ON, OFF }.
 
 </details>
 
-## Integrate beman.exemplar into your project
+## Integrate beman.cache_latest into your project
 
-To use `beman.exemplar` in your C++ project,
-include an appropriate `beman.exemplar` header from your source code.
+To use `beman.cache_latest` in your C++ project,
+include an appropriate `beman.cache_latest` header from your source code.
 
 ```c++
-#include <beman/exemplar/identity.hpp>
+#include <include/beman/cache_latest/cache_latest.hpp>
 ```
 
 > [!NOTE]
 >
-> `beman.exemplar` headers are to be included with the `beman/exemplar/` directories prefixed.
+> `beman.cache_latest` headers are to be included with the `beman/cache_latest/` directories prefixed.
 > It is not supported to alter include search paths to spell the include target another way. For instance,
 > `#include <identity.hpp>` is not a supported interface.
 
-How you will link your project against `beman.exemplar` will depend on your build system.
+How you will link your project against `beman.cache_latest` will depend on your build system.
 CMake instructions are provided in following sections.
 
-### Linking your project to beman.exemplar with CMake
+### Linking your project to beman.cache_latest with CMake
 
 For CMake based projects,
-you will need to use the `beman.exemplar` CMake module
-to define the `beman::exemplar` CMake target:
+you will need to use the `beman.cache_latest` CMake module
+to define the `beman::cache_latest` CMake target:
 
 ```cmake
-find_package(beman.exemplar REQUIRED)
+find_package(beman.cache_latest REQUIRED)
 ```
 
-You will also need to add `beman::exemplar` to the link libraries of
-any libraries or executables that include beman.exemplar's header file.
+You will also need to add `beman::cache_latest` to the link libraries of
+any libraries or executables that include beman.cache_latest's header file.
 
 ```cmake
-target_link_libraries(yourlib PUBLIC beman::exemplar)
+target_link_libraries(yourlib PUBLIC beman::cache_latest)
 ```
 
-### Produce beman.exemplar static library locally
+### Produce beman.cache_latest static library locally
 
-You can include exemplar's headers locally
-by producing a static `libbeman.exemplar.a` library.
+You can include cache_latest's headers locally
+by producing a static `libbeman.cache_latest.a` library.
 
 ```bash
 cmake --workflow --preset gcc-release
-cmake --install build/gcc-release --prefix /opt/beman.exemplar
+cmake --install build/gcc-release --prefix /opt/beman.cache_latest
 ```
 
-This will generate such directory structure at `/opt/beman.exemplar`.
+This will generate such directory structure at `/opt/beman.cache_latest`.
 
 ```txt
-/opt/beman.exemplar
+/opt/beman.cache_latest
 ├── include
 │   └── beman
-│       └── exemplar
+│       └── cache_latest
 │           └── identity.hpp
 └── lib
-    └── libbeman.exemplar.a
+    └── libbeman.cache_latest.a
 ```
 
 ## Contributing
