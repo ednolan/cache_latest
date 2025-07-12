@@ -5,21 +5,19 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 -->
 
 <!-- markdownlint-disable-next-line line-length -->
-![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg) ![Continuous Integration Tests](https://github.com/bemanproject/cache_latest/actions/workflows/ci_tests.yml/badge.svg) ![Lint Check (pre-commit)](https://github.com/bemanproject/cache_latest/actions/workflows/pre-commit.yml/badge.svg)
+![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg) ![Continuous Integration Tests](https://github.com/bemanproject/cache_latest/actions/workflows/ci_tests.yml/badge.svg) ![Standard Target](https://github.com/bemanproject/beman/blob/main/images/badges/cpp26.svg)
 
-`beman.cache_latest` is a minimal C++ library conforming to [The Beman Standard](https://github.com/bemanproject/beman/blob/main/docs/BEMAN_STANDARD.md).
-This can be used as a template for those intending to write Beman libraries.
-It may also find use as a minimal and modern  C++ project structure.
+`beman.cache_latest` is a C++ ranges adaptor that caches the result of the last dereference of the underlying iterator. The reason for doing this is efficiency - specifically avoiding extra iterator dereferences.
 
-**Implements**: `std::cache_latest` proposed in [Standard Library Concepts (P3138R3)](https://wg21.link/P3138R3).
+The library conforms to [The Beman Standard](https://github.com/bemanproject/beman/blob/main/docs/BEMAN_STANDARD.md).
+
+**Implements**: `std::views::cache_latest` proposed in [P3138 `views::cache_latest`](https://wg21.link/P3138) and in the working draft for C++26.
 
 **Status**: [Under development and not yet ready for production use.](https://github.com/bemanproject/beman/blob/main/docs/BEMAN_LIBRARY_MATURITY_MODEL.md#under-development-and-not-yet-ready-for-production-use)
 
 ## Usage
 
-`std::cache_latest` is a range adaptor type that caches the result of the last dereference of the underlying iterator
-
-The following code snippet illustrates how we can achieve a default projection using `beman::cache_latest`:
+The following code snippet illustrates using `beman::cache_latest`:
 
 ```cpp
 #include <include/beman/cache_latest.hpp>
@@ -52,8 +50,8 @@ int main()
 
 This project requires at least the following to build:
 
-* C++17
-* CMake 3.25
+* C++20
+* CMake 3.28
 
 This project pulls [Google Test](https://github.com/google/googletest)
 from GitHub as a development dependency for its testing framework,
