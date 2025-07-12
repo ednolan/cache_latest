@@ -60,33 +60,12 @@ You can disable this behavior by setting cmake option
 [`BEMAN_CACHE_LATEST_BUILD_TESTS`](#beman_cache_latest_build_tests) to `OFF`
 when configuring the project.
 
-However,
-some examples and tests will not be compiled
-unless provided compiler support **C++20** or ranges capabilities enabled.
-
-> [!TIP]
->
-> In the logs you will be able to see if there are any examples that aren't enabled
-> due to compiler capabilities or the configured C++ version.
->
-> Below is an example:
->
-> ```txt
-> -- Looking for __cpp_lib_ranges
-> -- Looking for __cpp_lib_ranges - not found
-> CMake Warning at examples/CMakeLists.txt:12 (message):
->   Missing range support! Skip: identity_as_default_projection
->
->
-> Examples to be built: identity_direct_usage
-> ```
-
 ### Supported Platforms
 
 This project officially supports:
 
-* GNU GCC Compiler \[version 12-14\]
-* LLVM Clang++ Compiler \[version 17-20\]
+* GNU GCC Compiler \[version 14+\]
+* LLVM Clang++ Compiler \[version 18-20\]
 * AppleClang compiler on Mac OS
 * MSVC compiler on Windows
 
