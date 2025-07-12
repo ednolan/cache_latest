@@ -2,7 +2,6 @@
 
 set(ALL_EXAMPLES identity_direct_usage)
 
-
 message("Examples to be built: ${ALL_EXAMPLES}")
 
 foreach(example ${ALL_EXAMPLES})
