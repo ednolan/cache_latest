@@ -2,8 +2,8 @@
 #define BEMAN_CACHE_LATEST_H
 
 // clang-format off
-#if __cplusplus < 202002L
-  #error "C++20 or later is required"
+#if __cplusplus < 202302L
+  #error "C++23 or later is required"
 #endif
 // clang-format on
 

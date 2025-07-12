@@ -50,7 +50,7 @@ int main()
 
 This project requires at least the following to build:
 
-* C++20
+* C++23
 * CMake 3.28
 
 This project pulls [Google Test](https://github.com/google/googletest)
