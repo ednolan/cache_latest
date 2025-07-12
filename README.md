@@ -7,12 +7,14 @@ SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 <!-- markdownlint-disable-next-line line-length -->
 ![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg) ![Continuous Integration Tests](https://github.com/bemanproject/cache_latest/actions/workflows/ci_tests.yml/badge.svg) ![Standard Target](https://github.com/bemanproject/beman/blob/main/images/badges/cpp26.svg)
 
+<!-- markdownlint-disable-next-line line-length -->
 `beman.cache_latest` is a C++ ranges adaptor that caches the result of the last dereference of the underlying iterator. The reason for doing this is efficiency - specifically avoiding extra iterator dereferences.
 
 The library conforms to [The Beman Standard](https://github.com/bemanproject/beman/blob/main/docs/BEMAN_STANDARD.md).
 
 **Implements**: `std::views::cache_latest` proposed in [P3138 `views::cache_latest`](https://wg21.link/P3138) and in the working draft for C++26.
 
+<!-- markdownlint-disable-next-line line-length -->
 **Status**: [Under development and not yet ready for production use.](https://github.com/bemanproject/beman/blob/main/docs/BEMAN_LIBRARY_MATURITY_MODEL.md#under-development-and-not-yet-ready-for-production-use)
 
 ## Usage
